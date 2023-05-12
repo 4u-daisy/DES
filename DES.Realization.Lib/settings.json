@@ -1,0 +1,6 @@
+{
+	"Constants": {
+		"BlockSize": "64",
+		"QuantityOfRounds": "16"
+	}
+}
