@@ -1,4 +1,4 @@
-﻿using DES.Realization.Lib.Helper;
+using DES.Realization.Lib.Helper;
 using Xunit;
 
 namespace DES.Realization.Tests.ConverterTests;

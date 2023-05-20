@@ -169,7 +169,7 @@ namespace DES.Realization.Desktop
             this.SaveFile.TabIndex = 14;
             this.SaveFile.Text = "Save File";
             this.SaveFile.UseVisualStyleBackColor = true;
-            this.SaveFile.Click += SaveFile_Click;
+            this.SaveFile.Click += new System.EventHandler(this.SaveFile_Click_1);
             // 
             // OpenFile
             // 
@@ -179,7 +179,7 @@ namespace DES.Realization.Desktop
             this.OpenFile.TabIndex = 15;
             this.OpenFile.Text = "Open File";
             this.OpenFile.UseVisualStyleBackColor = true;
-            this.OpenFile.Click += OpenFile_Click;
+            this.OpenFile.Click += new System.EventHandler(this.OpenFile_Click_1);
             // 
             // saveFileDialog1
             // 

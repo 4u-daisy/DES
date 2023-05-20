@@ -16,8 +16,6 @@ public partial class MainWindow : Form
     private bool outputTextIsHEX = false;
     private bool keyIsHEX = false;
 
-
-
     public MainWindow()
     {
         InitializeComponent();
@@ -38,14 +36,15 @@ public partial class MainWindow : Form
         _operation = radioButtonDecrypt.Checked ? _decrypt : _encrypt;
     }
 
+
     private void buttonExecute_Click(object sender, EventArgs e)
     {
-        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-        Encoding.GetEncoding("windows-1254");
-
+        //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        //Encoding.GetEncoding("windows-1254");
+        
         _key = textBoxInputKey.Text.Trim();
         if (!keyIsHEX)
-            _key = Converter.StringToHex(_key, Encoding.UTF32);
+            _key = Converter.StringToHex(_key, Encoding.BigEndianUnicode);
         if (_key.Length != 16)
         {
             MessageBox.Show("Incorrect key");
@@ -53,10 +52,10 @@ public partial class MainWindow : Form
         }
         var text = textBoxInputText.Text;
 
-        var len = (int)Math.Ceiling(1.0 * text.Length / 8);
-        text = text.PadRight(len * 8, ' ');
+        var len = (int)Math.Ceiling(1.0 * text.Length / 16);
+        text = text.PadRight(len * 16, ' ');
 
-        if(!inputTextIsHEX)
+        if (!inputTextIsHEX)
             text = Converter.StringToHex(text, Encoding.BigEndianUnicode);
 
         var desCipher = new Des();
@@ -91,5 +90,29 @@ public partial class MainWindow : Form
     private void keyIsHex_CheckedChanged(object sender, EventArgs e)
     {
         keyIsHEX = keyIsHex.Checked;
+    }
+
+    private void OpenFile_Click_1(object sender, EventArgs e)
+    {
+        if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+            return;
+        // получаем выбранный файл
+        string filename = openFileDialog1.FileName;
+        // читаем файл в строку
+        string fileText = System.IO.File.ReadAllText(filename);
+        pathToFile.Text = filename;
+        textBoxInputText.Text = fileText;
+
+    }
+
+    private void SaveFile_Click_1(object sender, EventArgs e)
+    {
+        if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
+            return;
+        // получаем выбранный файл
+        string filename = saveFileDialog1.FileName;
+        // сохраняем текст в файл
+        System.IO.File.WriteAllText(filename, textBoxOutputText.Text);
+        MessageBox.Show("Файл сохранен");
     }
 }
